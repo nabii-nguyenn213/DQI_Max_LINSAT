@@ -1,6 +1,6 @@
 import numpy as np
 from itertools import combinations, product
-from math import isqrt
+from math import isqrt, ceil, log2, sqrt, comb
 
 class LUTDecoder:
 
@@ -155,3 +155,58 @@ class BWSDDecoder:
                 return e
 
         return None
+
+class CollisionAwareAmplitudeAggregation: 
+    def __init__(self, B, q, degree=1, atol=1e-12):
+        self.B = np.asarray(B, dtype=int)
+        self.q = int(q)
+        self.degree = int(degree)
+        self.atol = atol
+        self.m, self.n = self.B.shape
+
+        if not 0 <= self.degree <= self.m: 
+            raise ValueError("Invalid polynomial degree")
+        self.B %= self.q 
+        # Binary encoding of F_q  
+        self.bits_per_symbol = ceil(log2(self.q))
+        self.num_qubits = self.n * self.bits_per_symbol
+
+        # Aggregation results 
+        self.raw_amplitudes = {}
+        self.normalized_amplitudes = {}
+        self.syndrome_errors = {}
+
+        self.num_errors = 0 
+        self.normalization = None
+
+    def count_errors(self): 
+        '''
+        Count errors of Hamming weight <= degree
+        '''
+        return sum(comb(self.m, k)*(self.q-1)**k for k in range(self.degree + 1))
+
+    def enumerate_errors(self): 
+        '''
+        Generate all errors with weight <= degree
+        '''
+        for weight in range(self.degree+1): 
+            for positions in combinations(range(self.m), weight): 
+                for values in product(range(1, self.q), repeat=weight): 
+                    error = np.zeros(self.m, dtype=int)
+                    for pos, value in zip(positions, values): 
+                        error[pos]=value
+                    yield error
+
+    def compute_syndrome(self, error): 
+        '''
+        Calculate s = B^T e mod q 
+        '''
+        error = np.asarray(error, dtype=int)
+        if error.shape != (self.m, ): 
+            raise ValueError("Invalid error dimension")
+        if np.any(error<0) or np.any(error >= self.q): 
+            raise ValueError("Error value outside F_q")
+        return tuple((self.B.T@error%self.q).tolist())
+
+    def aggregate(self, error_amplitudes): 
+        pass

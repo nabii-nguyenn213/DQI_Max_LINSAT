@@ -134,7 +134,7 @@ def formulate_max_linsat(q, eligible, conflicts):
         allowed.append([v in E for v in range(q)])
         weights.append(1.0)
         labels.append(f"eligible: {i}")
-       
+
     # print("Rows =", rows)
     B = np.array(rows, dtype=int).reshape(-1, n)
     allowed = np.array(allowed, dtype=bool).reshape(-1, q)

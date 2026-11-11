@@ -411,7 +411,7 @@ def main():
     output_path = visualizer.plot_comparison(
         results=results,
         shots=args.shots,
-        output_dir=ROOT / "results",
+        output_dir=ROOT / "results" / args.dataset,
         show=not args.no_show
     )
 

@@ -383,11 +383,6 @@ class DQI:
                     control_values=control_bits
                 )
 
-    def decode(self): 
-        '''
-        Connect the decoder 
-        '''
-
     def subtract_unitary(self, value):
         """
         |x> -> |x - value mod q>
