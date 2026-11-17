@@ -1,9 +1,5 @@
 # DQI for Timetabling Problem via Max-LINSAT
 
-Priority: Medium
-Status: In progress
-Type: QMOS Lab
-
 # Tiny Dataset
 
 InstructorSkill.csv
@@ -264,11 +260,11 @@ DQI’s idea is to replace these equal amplitudes with amplitudes determined by 
 
 For degree $\ell=0$: 
 
-For degree $\ell = 1$: 
-
 $$
 \phi_0(\mathbf{y})=\frac{1}{\sqrt{27}}
 $$
+
+For degree $\ell = 1$: 
 
 $$
 \phi_1(\mathbf{y})=\frac{\sum_{i=0}^6g_i(\mathbf{y})}{\sqrt{6\cdot27}}
@@ -281,7 +277,7 @@ Degree-1 basis depends on the number of satisfied constraints
 For degree $\ell$: 
 
 $$
-\phi_\ell(\mathbf{y})\propto\sum_{i<j<k<\dots}g_i(\mathbf{y})g_j(\mathbf{y})g_k(\mathbf{y})\dots
+\phi_\ell(\mathbf{y}) \propto \sum_{i \lt j \lt k \lt \cdots} g_i(\mathbf{y}) g_j(\mathbf{y}) g_k(\mathbf{y}) \cdots
 $$
 
 Higher degrees include higher-order combinations of constraint functions
@@ -405,9 +401,7 @@ $$
 For degree $\ell=1$: 
 
 $$
-\lvert\psi_E\rangle = \alpha_0 |0\rangle
-+ \sum_{i=1}^{6} \sum_{a=1}^{2}
-\alpha_{a\mathbf{u}_i} \lvert a\mathbf{u}_i\rangle
+\lvert\psi_E\rangle = \alpha_0 |0\rangle + \sum_{i=1}^{6} \sum_{a=1}^{2}\alpha_{a\mathbf{u}_i} \lvert a\mathbf{u}_i\rangle
 $$
 
 where $\mathbf{u}_i$ is a vector with 1 at position $i$ and 0 otherwise. Therefore, the error register represent a superposition over 13 error pattern.
@@ -516,8 +510,7 @@ $$
 After decoding
 
 $$
-|\Psi_{\mathrm{decoded}}\rangle
-=
+|\Psi_{\mathrm{decoded}}\rangle=
 \sum_{\mathbf{e}} \alpha_{\mathbf{e}}
 \underbrace{|\mathbf{r}_{\mathbf{e}}\rangle}_{\text{Residual-error register}}
 \underbrace{|\mathbf{s}_{\mathbf{e}}\rangle}_{\text{Syndrome register}}

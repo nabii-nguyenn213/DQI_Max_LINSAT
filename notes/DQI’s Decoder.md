@@ -126,7 +126,6 @@ H=B^T=\begin{bmatrix}
 2&0&1&0&1&0\\
 0&2&2&0&0&1
 \end{bmatrix}_{3\times 6}
-
 $$
 
 Suppose the original error vector is 
@@ -297,7 +296,7 @@ Because temporary registers containing candidate or comparison information may r
 The decoder performs:
 
 $$
-\lvert\mathbf{e}\rangle\lvert\hat{\mathbf{e}}\rangle\rightarrow\lvert\mathbf{e}-\hat{\mathbf{e}}\rangle\lvert\hat{\mathbf{e}}\rangle
+\lvert\mathbf{e}\rangle\lvert\hat{\mathbf{e}}\rangle\rightarrow\lvert\mathbf{e} - \hat{\mathbf{e}}\rangle\lvert\hat{\mathbf{e}}\rangle
 $$
 
 The output register $A$ still contains the decoded error, we want to clear it as well. Because $A$ was computed from the unchanged syndrome register $S$, we can run the entire decoder-computation circuit in reverse to erase $A$. The complete operation: 
@@ -474,24 +473,31 @@ $$
 # Quantum Eraser + Post selection 
 
 Assume the Max-XORSAT experiment has: 
+
 $$
 m=5, \quad n=4, \quad \ell=4
 $$
+
 The problem occurs when two different errors generate the same syndrome. For example, suppose: 
+
 $$
 e_1 \neq e_2, \quad B^T e_1 = B^T e_2 = s 
 $$
+
 A deterministic decoder receives $s$ and must choose a **single** estimate $\hat{e}$. It cannot output both $e_1$ and $e_2$ for the same input. 
 Therefore, at least one branch cannot be reset correctly by that decoder. 
 Quantum eraser & Post Selection is an alternative method to avoid guessing which original error occured. 
 ### Step 1: Apply Hadamard gates to the error register 
 Instead of decoding the syndrome into a particular error, we apply $H^{\otimes m}$ to the error register. 
 For one qubit: 
+
 $$
 H\lvert 0\rangle = \frac{\lvert 0\rangle + \lvert 1 \rangle}{\sqrt{2}}=\lvert + \rangle\\
 H\lvert 1\rangle = \frac{\lvert 0\rangle - \lvert 1 \rangle}{\sqrt{2}}=\lvert - \rangle
 $$
+
 For $n$ qubits: 
+
 $$
 H^{\otimes n}\lvert e\rangle = \frac{1}{\sqrt{2^n}}\sum_{z\in\{0, 1\}^n}(-1)^{e\cdot z}\lvert z\rangle
 $$
@@ -509,6 +515,7 @@ Quantum Eraser applies Hadamard gates to the error register: $H^{\otimes 5}\lver
 
 **How feedforward calculates the correction?** 
 The Max-XORSAT problem uses: 
+
 $$
 B = \begin{bmatrix}
 1 & 0 & 0 & 0 \\ 
@@ -517,16 +524,21 @@ B = \begin{bmatrix}
 0 & 0 & 0 & 1
 \end{bmatrix}
 $$
+
 We want to find a four-bit vector $t$ satisfying 
+
 $$
 Bt=z \quad(\text{mod } 2)
 $$
+
 Here: 
 - $z$: is the measured five-bit error-register outcome. 
 - $t$: is the four-bit feedforward correction. 
 - $B$: is the matrix defining the Max-XORSAT problem
+
 For example, let's say we measure $z=00011$, solving the equation gives $t=0001$.
 We can verify: 
+
 $$
 B
 \begin{bmatrix}
@@ -537,8 +549,8 @@ B
 \end{bmatrix}
 =z
 $$
-Therefore, the result `00011` can be corrected with $t=0001$
 
+Therefore, the result `00011` can be corrected with $t=0001$
 **Why can some outcomes not be corrected?** 
 For this particular matrix $B$, the equation $Bt=z$ has a solution precisely when z has *even parity*. 
 For example, 
