@@ -542,10 +542,17 @@ We can verify:
 $$
 B
 \begin{bmatrix}
-0\\0\\0\\1
+0 \\
+0 \\
+0 \\
+1
 \end{bmatrix} =
 \begin{bmatrix}
-0\\0\\0\\1\\1
+0 \\
+0 \\
+0 \\
+1 \\
+1
 \end{bmatrix}
 =z
 $$
