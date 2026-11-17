@@ -1,15 +1,3 @@
-"""Compare collision workarounds for PennyLane DQI Max-XORSAT.
-
-Install: python -m pip install pennylane numpy matplotlib
-Run:     python dqi_collision_workarounds.py --ell 3
-Optional:python dqi_collision_workarounds.py --ell 3 --shots 100000
-
-The eraser applies Hadamards to the error register. The baseline accepts
-only |0...0>. This extended experiment accepts ALL even-parity outcomes
-and corrects the final assignment using classical feedforward. An optional
-Grover amplitude amplification circuit boosts the even-parity event.
-Neither method is guaranteed to outperform a standard DQI decoder.
-"""
 from __future__ import annotations
 
 import argparse
